@@ -12,14 +12,14 @@ var toDoList = {
       } else {
         for (i = 0; i < this.todos.length; i++) {
           if (this.todos[i].completed === true) {
-            console.log("(x) ",this.todos[i].todoText);
+            console.log("(x) ", this.todos[i].todoText);
           } else {
-            console.log("( ) ",this.todos[i].todoText);
+            console.log("( ) ", this.todos[i].todoText);
           }
         }
       }
     },
-  
+    // add a new todo
     addToDo: function(todoText) {
       this.todos.push({
         todoText: todoText,
@@ -27,20 +27,50 @@ var toDoList = {
       });
       this.displayToDos();
     },
-  
+    // Edit to do
     editToDo: function(index, todoText) {
       this.todos[index].todoText = todoText;
       this.displayToDos();
     },
-  
+    // delete todo
     deleteToDo: function(index) {
       this.todos.splice(index, 1);
       this.displayToDos();
     },
-  
+    // complete todo
     completeToDo: function(index) {
       var todo = this.todos[index];
       todo.completed = !todo.completed;
+      this.displayToDos();
+    },
+  
+    //toggle all todos
+    toggleAll: function() {
+      var totalTodos = this.todos.length;
+      var completedTodos = 0;
+      
+      //get compelted to dos number
+      for (i = 0; i < totalTodos; i++) {
+        if (this.todos[i].completed === true) {
+          completedTodos++;
+        }
+      }
+      // Case 1: if everithing is true make everithing false
+      if (completedTodos === totalTodos) {
+        //make all false
+        for (var i = 0; i < totalTodos; i++) {
+          this.todos[i].completed = false;
+          
+        }
+      }
+      //Case 2: otherwise make all true 
+      else{
+        for (var i = 0; i < totalTodos; i++) {
+          this.todos[i].completed = true;
+          
+        }
+      }
+      
       this.displayToDos();
     }
   };
