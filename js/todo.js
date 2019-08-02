@@ -75,3 +75,14 @@ var toDoList = {
     }
   };
   
+  //access to the display todos button.
+var displayTodosButton = document.getElementById('displayTodosButton');
+displayTodosButton.addEventListener('click', function(){
+  toDoList.displayToDos();
+})
+
+// Toggle all the tasks
+var toggleAllButton = document.getElementById('toggleAllButton');
+toggleAllButton.addEventListener('click', function(){
+  toDoList.toggleAll();
+})
