@@ -4,44 +4,25 @@
 var toDoList = {
   todos: [],
 
-  //display todos
-  displayToDos: function() {
-    console.log("Mis Tareas:");
-    if (this.todos.length === 0) {
-      console.log("No hay tareas. agrega una tarea");
-    } else {
-      for (i = 0; i < this.todos.length; i++) {
-        if (this.todos[i].completed === true) {
-          console.log("(x) ", this.todos[i].todoText);
-        } else {
-          console.log("( ) ", this.todos[i].todoText);
-        }
-      }
-    }
-  },
   // add a new todo
   addToDo: function(todoText) {
     this.todos.push({
       todoText: todoText,
       completed: false
     });
-    this.displayToDos();
   },
   // Edit to do
   editToDo: function(index, todoText) {
     this.todos[index].todoText = todoText;
-    this.displayToDos();
   },
   // delete todo
   deleteToDo: function(index) {
     this.todos.splice(index, 1);
-    this.displayToDos();
   },
   // complete todo
   completeToDo: function(index) {
     var todo = this.todos[index];
     todo.completed = !todo.completed;
-    this.displayToDos();
   },
 
   //toggle all todos
@@ -73,54 +54,77 @@ var toDoList = {
   }
 };
 
-//   // access to the display todos button.
-// var displayTodosButton = document.getElementById('displayTodosButton');
-// displayTodosButton.addEventListener('click', function(){
-//   toDoList.displayToDos();
-// })
-
-// // Toggle all the tasks
-// var toggleAllButton = document.getElementById('toggleAllButton');
-// toggleAllButton.addEventListener('click', function(){
-//   toDoList.toggleAll();
-// })
-
 var handlers = {
   displayToDos: function() {
     toDoList.displayToDos();
   },
 
-  toggleAll: function() {
-    toDoList.toggleAll();
-  },
-
-  addTodo: function(){
-    var addTodoTextInput = document.getElementById('addTodoTextInput');
+  addTodo: function() {
+    var addTodoTextInput = document.getElementById("addTodoTextInput");
     toDoList.addToDo(addTodoTextInput.value);
     addTodoTextInput.value = "";
+    view.displayToDos();
   },
 
-  editTodo: function(){
-    var editTodoPositionInput = document.getElementById('editTodoPositionInput');
-    var editTodoTextInput = document.getElementById('editTodoTextInput');
+  editTodo: function() {
+    var editTodoPositionInput = document.getElementById(
+      "editTodoPositionInput"
+    );
+    var editTodoTextInput = document.getElementById("editTodoTextInput");
 
-    toDoList.editToDo(editTodoPositionInput.valueAsNumber, editTodoTextInput.value);
-    
+    toDoList.editToDo(
+      editTodoPositionInput.valueAsNumber,
+      editTodoTextInput.value
+    );
+
     editTodoPositionInput.value = "";
     editTodoTextInput.value = "";
-
+    view.displayToDos();
   },
-  deleteTodo: function(){
-    var deleteTodoPositionInput = document.getElementById('deleteTodoPositionInput');
+  deleteTodo: function() {
+    var deleteTodoPositionInput = document.getElementById(
+      "deleteTodoPositionInput"
+    );
     toDoList.deleteToDo(deleteTodoPositionInput.valueAsNumber);
     deleteTodoPositionInput.value = "";
+    view.displayToDos();
   },
 
-  completeTodo: function(){
-    var completeTodoPositionInput = document.getElementById('completeTodoPositionInput');
+  completeTodo: function() {
+    var completeTodoPositionInput = document.getElementById(
+      "completeTodoPositionInput"
+    );
     toDoList.completeToDo(completeTodoPositionInput.valueAsNumber);
     completeTodoPositionInput.value = "";
+    view.displayToDos();
+  },
 
+  toggleAll: function() {
+    toDoList.toggleAll();
+    view.displayToDos();
   }
+};
 
+var view = {
+  displayToDos: function() {
+    var todosUl = document.querySelector("ul");
+    //sets the content to nothing
+    todosUl.innerHTML = "";
+    // go through all array tasks
+    for (i = 0; i < toDoList.todos.length; i++) {
+      var todoLi = document.createElement("li");
+      var todo = toDoList.todos[i];
+      var todoTextComplete = "";
+
+      if (todo.completed === true) {
+        todoTextComplete = "(x) " + todo.todoText;
+      } else {
+        todoTextComplete = "( ) " + todo.todoText;
+      }
+
+      todoLi.textContent = todoTextComplete;
+      // todoLi.textContent = toDoList.todos[i].todoText;
+      todosUl.appendChild(todoLi);
+    }
+  }  
 };
