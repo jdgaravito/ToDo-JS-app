@@ -2,79 +2,77 @@
 
 //initial setup
 var toDoList = {
-    todos: [],
-  
-    //display todos
-    displayToDos: function() {
-      console.log("Mis Tareas:");
-      if (this.todos.length === 0) {
-        console.log("No hay tareas. agrega una tarea");
-      } else {
-        for (i = 0; i < this.todos.length; i++) {
-          if (this.todos[i].completed === true) {
-            console.log("(x) ", this.todos[i].todoText);
-          } else {
-            console.log("( ) ", this.todos[i].todoText);
-          }
-        }
-      }
-    },
-    // add a new todo
-    addToDo: function(todoText) {
-      this.todos.push({
-        todoText: todoText,
-        completed: false
-      });
-      this.displayToDos();
-    },
-    // Edit to do
-    editToDo: function(index, todoText) {
-      this.todos[index].todoText = todoText;
-      this.displayToDos();
-    },
-    // delete todo
-    deleteToDo: function(index) {
-      this.todos.splice(index, 1);
-      this.displayToDos();
-    },
-    // complete todo
-    completeToDo: function(index) {
-      var todo = this.todos[index];
-      todo.completed = !todo.completed;
-      this.displayToDos();
-    },
-  
-    //toggle all todos
-    toggleAll: function() {
-      var totalTodos = this.todos.length;
-      var completedTodos = 0;
-      
-      //get compelted to dos number
-      for (i = 0; i < totalTodos; i++) {
+  todos: [],
+
+  //display todos
+  displayToDos: function() {
+    console.log("Mis Tareas:");
+    if (this.todos.length === 0) {
+      console.log("No hay tareas. agrega una tarea");
+    } else {
+      for (i = 0; i < this.todos.length; i++) {
         if (this.todos[i].completed === true) {
-          completedTodos++;
+          console.log("(x) ", this.todos[i].todoText);
+        } else {
+          console.log("( ) ", this.todos[i].todoText);
         }
       }
-      // Case 1: if everithing is true make everithing false
-      if (completedTodos === totalTodos) {
-        //make all false
-        for (var i = 0; i < totalTodos; i++) {
-          this.todos[i].completed = false;
-          
-        }
-      }
-      //Case 2: otherwise make all true 
-      else{
-        for (var i = 0; i < totalTodos; i++) {
-          this.todos[i].completed = true;
-          
-        }
-      }
-      
-      this.displayToDos();
     }
-  };
-  
+  },
+  // add a new todo
+  addToDo: function(todoText) {
+    this.todos.push({
+      todoText: todoText,
+      completed: false
+    });
+    this.displayToDos();
+  },
+  // Edit to do
+  editToDo: function(index, todoText) {
+    this.todos[index].todoText = todoText;
+    this.displayToDos();
+  },
+  // delete todo
+  deleteToDo: function(index) {
+    this.todos.splice(index, 1);
+    this.displayToDos();
+  },
+  // complete todo
+  completeToDo: function(index) {
+    var todo = this.todos[index];
+    todo.completed = !todo.completed;
+    this.displayToDos();
+  },
+
+  //toggle all todos
+  toggleAll: function() {
+    var totalTodos = this.todos.length;
+    var completedTodos = 0;
+
+    //get compelted to dos number
+    for (i = 0; i < totalTodos; i++) {
+      if (this.todos[i].completed === true) {
+        completedTodos++;
+      }
+    }
+    // Case 1: if everithing is true make everithing false
+    if (completedTodos === totalTodos) {
+      //make all false
+      for (var i = 0; i < totalTodos; i++) {
+        this.todos[i].completed = false;
+      }
+    }
+    //Case 2: otherwise make all true
+    else {
+      for (var i = 0; i < totalTodos; i++) {
+        this.todos[i].completed = true;
+      }
+    }
+
+    this.displayToDos();
+  }
+};
+
 //   // access to the display todos button.
 // var displayTodosButton = document.getElementById('displayTodosButton');
 // displayTodosButton.addEventListener('click', function(){
@@ -87,16 +85,42 @@ var toDoList = {
 //   toDoList.toggleAll();
 // })
 
-
 var handlers = {
-  displayToDos: function(){
+  displayToDos: function() {
     toDoList.displayToDos();
   },
 
-  toggleAll: function(){
+  toggleAll: function() {
     toDoList.toggleAll();
+  },
+
+  addTodo: function(){
+    var addTodoTextInput = document.getElementById('addTodoTextInput');
+    toDoList.addToDo(addTodoTextInput.value);
+    addTodoTextInput.value = "";
+  },
+
+  editTodo: function(){
+    var editTodoPositionInput = document.getElementById('editTodoPositionInput');
+    var editTodoTextInput = document.getElementById('editTodoTextInput');
+
+    toDoList.editToDo(editTodoPositionInput.valueAsNumber, editTodoTextInput.value);
+    
+    editTodoPositionInput.value = "";
+    editTodoTextInput.value = "";
+
+  },
+  deleteTodo: function(){
+    var deleteTodoPositionInput = document.getElementById('deleteTodoPositionInput');
+    toDoList.deleteToDo(deleteTodoPositionInput.valueAsNumber);
+    deleteTodoPositionInput.value = "";
+  },
+
+  completeTodo: function(){
+    var completeTodoPositionInput = document.getElementById('completeTodoPositionInput');
+    toDoList.completeToDo(completeTodoPositionInput.valueAsNumber);
+    completeTodoPositionInput.value = "";
+
   }
-}
 
-  
-
+};
