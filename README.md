@@ -6,7 +6,8 @@ Made for practicing the JS Fundamentals.
 
 ## What i learned with this project?
 
-- Started with basic CRUD thorught the console. trying to take it to the next level each time adding more complexity.
+- Started with basic CRUD thorught the console. trying to take it to the next level each time adding more complexity (please refer to the commits section to see each iteration).
 - All done with vanilla JS, no external libraries to understand the basics.
-- Learned to manipulate the DOM.
+- Learned basics of manipulating the DOM.
+- Learned about event delegation to handle DOM manipulation of child elements.
 - Added styles and html functionality.

@@ -49,8 +49,6 @@ var toDoList = {
         this.todos[i].completed = true;
       }
     }
-
-    this.displayToDos();
   }
 };
 
@@ -66,33 +64,20 @@ var handlers = {
     view.displayToDos();
   },
 
-  editTodo: function() {
-    var editTodoPositionInput = document.getElementById(
-      "editTodoPositionInput"
-    );
-    var editTodoTextInput = document.getElementById("editTodoTextInput");
-
-    toDoList.editToDo(
-      editTodoPositionInput.valueAsNumber,
-      editTodoTextInput.value
-    );
-
-    editTodoPositionInput.value = "";
+  editTodo: function(index, newText) {
+    
+    toDoList.editToDo(index, newText);
     editTodoTextInput.value = "";
     view.displayToDos();
   },
+
   deleteTodo: function(index) {
-    
     toDoList.deleteToDo(index);
     view.displayToDos();
   },
 
-  completeTodo: function() {
-    var completeTodoPositionInput = document.getElementById(
-      "completeTodoPositionInput"
-    );
-    toDoList.completeToDo(completeTodoPositionInput.valueAsNumber);
-    completeTodoPositionInput.value = "";
+  completeTodo: function(index) {
+    toDoList.completeToDo(index);
     view.displayToDos();
   },
 
@@ -119,9 +104,13 @@ var view = {
         todoTextComplete = "( ) " + todo.todoText + " ";
       }
       todoLi.id = i;
+
       todoLi.textContent = todoTextComplete;
+      todoLi.prepend(this.createCompleteButton());
       // todoLi.textContent = toDoList.todos[i].todoText;
+      todoLi.appendChild(this.createEditButton());
       todoLi.appendChild(this.createDeleteButton());
+
       todosUl.appendChild(todoLi);
     }
   },
@@ -133,17 +122,37 @@ var view = {
     return deleteButton;
   },
 
+  createCompleteButton: function() {
+    var completeButton = document.createElement("button");
+    completeButton.textContent = "Mark as Complete";
+    completeButton.className = "completeButton";
+    return completeButton;
+  },
+
+  createEditButton: function(){
+    var editButton = document.createElement("button");
+    editButton.textContent = "Edit";
+    editButton.className = "editButton";
+    return editButton;
+
+  },
+
   setUpEventListeners: function() {
     var todosUl = document.querySelector("ul");
-    todosUl.addEventListener("click", function(event) {
+    todosUl.addEventListener("click", function(event, text) {
       var elementClick = event.target;
       if (elementClick.className === "deleteButton") {
-          handlers.deleteTodo(parseInt(elementClick.parentNode.id));
+        handlers.deleteTodo(parseInt(elementClick.parentNode.id));
+      }
+      if (elementClick.className === "completeButton") {
+        handlers.completeTodo(parseInt(elementClick.parentNode.id));
+      }
+      if (elementClick.className === "editButton"){
+        var newText = document.getElementById("editTodoTextInput");
+        handlers.editTodo(parseInt(elementClick.parentNode.id), newText.value);
       }
     });
-
   }
 };
 
 view.setUpEventListeners();
-
