@@ -30,25 +30,23 @@ var toDoList = {
     var totalTodos = this.todos.length;
     var completedTodos = 0;
 
-    //get compelted to dos number
-    for (i = 0; i < totalTodos; i++) {
-      if (this.todos[i].completed === true) {
+    // get the number of completed todos.
+    this.todos.forEach(function(todo) {
+      if (todo.completed === true) {
         completedTodos++;
       }
-    }
-    // Case 1: if everithing is true make everithing false
-    if (completedTodos === totalTodos) {
-      //make all false
-      for (var i = 0; i < totalTodos; i++) {
-        this.todos[i].completed = false;
-      }
-    }
-    //Case 2: otherwise make all true
-    else {
-      for (var i = 0; i < totalTodos; i++) {
-        this.todos[i].completed = true;
-      }
-    }
+    });
+
+    this.todos.forEach(function(todo){
+      //Case 1: if everithing is true make everithing false
+      if (completedTodos === totalTodos){
+         todo.completed = false; 
+        }
+        //Case 2: otherwise make all true
+        else {
+          todo.completed = true;
+        }
+    })
   }
 };
 
@@ -65,7 +63,6 @@ var handlers = {
   },
 
   editTodo: function(index, newText) {
-    
     toDoList.editToDo(index, newText);
     editTodoTextInput.value = "";
     view.displayToDos();
@@ -129,12 +126,11 @@ var view = {
     return completeButton;
   },
 
-  createEditButton: function(){
+  createEditButton: function() {
     var editButton = document.createElement("button");
     editButton.textContent = "Edit";
     editButton.className = "editButton";
     return editButton;
-
   },
 
   setUpEventListeners: function() {
@@ -147,7 +143,7 @@ var view = {
       if (elementClick.className === "completeButton") {
         handlers.completeTodo(parseInt(elementClick.parentNode.id));
       }
-      if (elementClick.className === "editButton"){
+      if (elementClick.className === "editButton") {
         var newText = document.getElementById("editTodoTextInput");
         handlers.editTodo(parseInt(elementClick.parentNode.id), newText.value);
       }
