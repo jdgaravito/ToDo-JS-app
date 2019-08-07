@@ -37,16 +37,16 @@ var toDoList = {
       }
     });
 
-    this.todos.forEach(function(todo){
+    this.todos.forEach(function(todo) {
       //Case 1: if everithing is true make everithing false
-      if (completedTodos === totalTodos){
-         todo.completed = false; 
-        }
-        //Case 2: otherwise make all true
-        else {
-          todo.completed = true;
-        }
-    })
+      if (completedTodos === totalTodos) {
+        todo.completed = false;
+      }
+      //Case 2: otherwise make all true
+      else {
+        todo.completed = true;
+      };
+    });
   }
 };
 
@@ -89,27 +89,24 @@ var view = {
     var todosUl = document.querySelector("ul");
     //sets the content to nothing
     todosUl.innerHTML = "";
-    // go through all array tasks
-    for (i = 0; i < toDoList.todos.length; i++) {
-      var todoLi = document.createElement("li");
-      var todo = toDoList.todos[i];
-      var todoTextComplete = "";
 
+    toDoList.todos.forEach(function(todo, index) {
+      var todoLi = document.createElement("li");
+      var todoTextComplete = "";
       if (todo.completed === true) {
         todoTextComplete = "(x) " + todo.todoText + " ";
       } else {
         todoTextComplete = "( ) " + todo.todoText + " ";
       }
-      todoLi.id = i;
 
+      todoLi.id = index;
       todoLi.textContent = todoTextComplete;
       todoLi.prepend(this.createCompleteButton());
-      // todoLi.textContent = toDoList.todos[i].todoText;
       todoLi.appendChild(this.createEditButton());
       todoLi.appendChild(this.createDeleteButton());
-
       todosUl.appendChild(todoLi);
-    }
+      // the forEach has an optional argument that is this when executing callback forEach(callback, this)
+    }, this);
   },
 
   createDeleteButton: function() {
