@@ -15,16 +15,20 @@
     <main>
       <!-- <button id="displayTodosButton">Display Tasks</button>
         <button  id="toggleAllButton">Toggle Tasks</button> -->
-      <div>
+      <fieldset>
+        <div>
         <button onclick="handlers.toggleAll()">Toggle Tasks</button>
       </div>
       <div>
         <button onclick="handlers.addTodo()">Add New Task</button>
-        <input id="addTodoTextInput" type="text" />
+        <input id="addTodoTextInput" type="text" placeholder="Write your task" />
       </div>
+    </fieldset>
+    <fieldset>
       <div><p>Text for editing the task</p>
         <input id="editTodoTextInput" type="text" />
       </div>
+    </fieldset>
       <hr>
         <h3> List of Tasks</h3>
 

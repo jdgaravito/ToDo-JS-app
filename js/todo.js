@@ -45,7 +45,7 @@ var toDoList = {
       //Case 2: otherwise make all true
       else {
         todo.completed = true;
-      };
+      }
     });
   }
 };
@@ -63,7 +63,8 @@ var handlers = {
   },
 
   editTodo: function(index, newText) {
-    toDoList.editToDo(index, newText);
+    var editTodoTextInput = document.getElementById("editTodoTextInput");
+    toDoList.editToDo(index, editTodoTextInput.value);
     editTodoTextInput.value = "";
     view.displayToDos();
   },
@@ -105,7 +106,7 @@ var view = {
       todoLi.appendChild(this.createEditButton());
       todoLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todoLi);
-      // the forEach has an optional argument that is this when executing callback forEach(callback, this)
+      // the forEach has an optional argument that is "this" when executing callback forEach(callback, this)
     }, this);
   },
 
@@ -131,7 +132,15 @@ var view = {
   },
 
   setUpEventListeners: function() {
+    // Enter Key listeners
+    addTodoTextInput.addEventListener("keyup", function(event) {
+      if (event.key === "Enter") {
+        handlers.addTodo(addTodoTextInput);
+      }
+    });
+    // Button Key Listeners
     var todosUl = document.querySelector("ul");
+
     todosUl.addEventListener("click", function(event, text) {
       var elementClick = event.target;
       if (elementClick.className === "deleteButton") {
@@ -142,6 +151,7 @@ var view = {
       }
       if (elementClick.className === "editButton") {
         var newText = document.getElementById("editTodoTextInput");
+        var editId = elementClick.parentNode.id;
         handlers.editTodo(parseInt(elementClick.parentNode.id), newText.value);
       }
     });
