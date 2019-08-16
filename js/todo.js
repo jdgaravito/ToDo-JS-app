@@ -151,8 +151,8 @@ var view = {
       }
       if (elementClick.className === "editButton") {
         var newText = document.getElementById("editTodoTextInput");
-        var editId = elementClick.parentNode.id;
-        handlers.editTodo(parseInt(elementClick.parentNode.id), newText.value);
+        var editId = parseInt(elementClick.parentNode.id);
+        handlers.editTodo(editId, newText.value);
       }
     });
   }

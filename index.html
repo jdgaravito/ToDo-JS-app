@@ -8,40 +8,30 @@
       href="https://fonts.googleapis.com/css?family=Fjalla+One|Noto+Sans|Noto+Serif&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="css/style.css" />
     <title>To Do List JS App</title>
   </head>
   <body>
-    <nav><h1>To Do App</h1></nav>
-    <main>
-      <!-- <button id="displayTodosButton">Display Tasks</button>
-        <button  id="toggleAllButton">Toggle Tasks</button> -->
-      <fieldset>
-        <div>
-        <button onclick="handlers.toggleAll()">Toggle Tasks</button>
+    <div class="wrapper">
+      <div class="inner">
+        <div class="sidebar">
+            <div class="title_area">
+                <h1 class="app_title">What needs to be done?</h1>
+              </div>
+              <div class="new_task_area">
+                
+                  <div class="input-field">
+                      <input
+                        id="addTodoTextInput"
+                        type="textarea"
+                        placeholder="Write Your Task Here"
+                      />
+                      <button class="material-icons addbutton" onclick="handlers.addTodo()">add</button>
+                    </div>
+              </div>
+        </div>
+        
       </div>
-      <div>
-        <button onclick="handlers.addTodo()">Add New Task</button>
-        <input id="addTodoTextInput" type="text" placeholder="Write your task" />
-      </div>
-    </fieldset>
-    <fieldset>
-      <div><p>Text for editing the task</p>
-        <input id="editTodoTextInput" type="text" />
-      </div>
-    </fieldset>
-      <hr>
-        <h3> List of Tasks</h3>
-
-        <ul>
-
-        </ul>
-
-
-
-
-    </main>
-    <footer>
-      <script src="js/todo.js"></script>
-    </footer>
+    </div>
   </body>
 </html>
