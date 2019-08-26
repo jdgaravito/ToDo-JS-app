@@ -88,12 +88,15 @@ var handlers = {
 var view = {
   displayToDos: function() {
     var todosUl = document.querySelector("ul");
+    todosUl.className = "list-wrapper"
     //sets the content to nothing
     todosUl.innerHTML = "";
 
     toDoList.todos.forEach(function(todo, index) {
       var todoLi = document.createElement("li");
+      todoLi.className = "list";
       var todoTextComplete = "";
+      todoTextComplete.className = "task-text"
       if (todo.completed === true) {
         todoTextComplete = "(x) " + todo.todoText + " ";
       } else {
@@ -112,23 +115,29 @@ var view = {
 
   createDeleteButton: function() {
     var deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete";
-    deleteButton.className = "deleteButton";
+    deleteButton.textContent = "delete";
+    deleteButton.className = "material-icons deleteButton";
     return deleteButton;
   },
 
   createCompleteButton: function() {
     var completeButton = document.createElement("button");
-    completeButton.textContent = "Mark as Complete";
-    completeButton.className = "completeButton";
+    completeButton.textContent = "check_circle";
+    completeButton.className = "material-icons completeButton";
     return completeButton;
   },
 
   createEditButton: function() {
     var editButton = document.createElement("button");
-    editButton.textContent = "Edit";
-    editButton.className = "editButton";
+    editButton.textContent = "edit";
+    editButton.className = "material-icons editButton";
     return editButton;
+  },
+
+  createEditInput: function(){
+    var editInput = document.createElement("input");
+    editInput.textContent = "";
+    editInput.className = "editInput";
   },
 
   setUpEventListeners: function() {
@@ -143,14 +152,14 @@ var view = {
 
     todosUl.addEventListener("click", function(event, text) {
       var elementClick = event.target;
-      if (elementClick.className === "deleteButton") {
+      if (elementClick.className === "material-icons deleteButton") {
         handlers.deleteTodo(parseInt(elementClick.parentNode.id));
       }
-      if (elementClick.className === "completeButton") {
+      if (elementClick.className === "material-icons completeButton") {
         handlers.completeTodo(parseInt(elementClick.parentNode.id));
       }
-      if (elementClick.className === "editButton") {
-        var newText = document.getElementById("editTodoTextInput");
+      if (elementClick.className === "material-icons editButton") {
+        var newText = document.getElementById("editInput");
         var editId = parseInt(elementClick.parentNode.id);
         handlers.editTodo(editId, newText.value);
       }

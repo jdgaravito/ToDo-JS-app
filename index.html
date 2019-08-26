@@ -14,24 +14,38 @@
   <body>
     <div class="wrapper">
       <div class="inner">
-        <div class="sidebar">
-            <div class="title_area">
-                <h1 class="app_title">What needs to be done?</h1>
-              </div>
-              <div class="new_task_area">
-                
-                  <div class="input-field">
-                      <input
-                        id="addTodoTextInput"
-                        type="textarea"
-                        placeholder="Write Your Task Here"
-                      />
-                      <button class="material-icons addbutton" onclick="handlers.addTodo()">add</button>
-                    </div>
-              </div>
-        </div>
-        
+        <section class="sidebar">
+          <div class="title_area">
+            <h1 class="app_title">What needs to be done?</h1>
+          </div>
+          <div class="new_task_area">
+            <div class="input-field">
+              <input
+                id="addTodoTextInput"
+                type="textarea"
+                placeholder="Write Your Task Here"
+              />
+              <button
+                class="material-icons addbutton"
+                onclick="handlers.addTodo()"
+              >
+                add
+              </button>
+            </div>
+          </div>
+        </section>
+        <section class="main_tasks">
+          <main>
+              <h3>List of Tasks</h3>
+  
+            <ul></ul>
+
+          </main>  
+          
+        </section>
       </div>
     </div>
+
+    <footer><script src="js/todo.js"></script></footer>
   </body>
 </html>
