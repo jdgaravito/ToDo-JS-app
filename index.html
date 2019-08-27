@@ -4,10 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Fjalla+One|Noto+Sans|Noto+Serif&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="css/style.css" />
     <title>To Do List JS App</title>
   </head>
@@ -37,7 +33,8 @@
         <section class="main_tasks">
           <main>
               <h3>List of Tasks</h3>
-  
+              <button onclick="handlers.toggleAll()" class="toggleAll"><i class="material-icons toggle-icon">
+                radio_button_checked</i><p>Toggle</p></button>
             <ul></ul>
 
           </main>  

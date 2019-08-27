@@ -1,4 +1,5 @@
 //A console toDo List made in vanilla JS.
+// Author: Juan David Garavito
 
 //initial setup
 var toDoList = {
@@ -90,22 +91,27 @@ var view = {
     var todosUl = document.querySelector("ul");
     todosUl.className = "list-wrapper"
     //sets the content to nothing
-    todosUl.innerHTML = "";
+    todosUl.innerText = "";
 
     toDoList.todos.forEach(function(todo, index) {
       var todoLi = document.createElement("li");
       todoLi.className = "list";
+      var todolistText = document.createElement("p");
       var todoTextComplete = "";
-      todoTextComplete.className = "task-text"
-      if (todo.completed === true) {
-        todoTextComplete = "(x) " + todo.todoText + " ";
-      } else {
-        todoTextComplete = "( ) " + todo.todoText + " ";
-      }
-
       todoLi.id = index;
-      todoLi.textContent = todoTextComplete;
-      todoLi.prepend(this.createCompleteButton());
+      if (todo.completed === true) {
+        buttonComplete = todoLi.prepend(this.createCompleteButton());
+        todoTextComplete = " " + todo.todoText + " ";
+        todolistText.className = "text-completed";
+      } else {
+        buttonComplete = todoLi.prepend(this.createIncompleteButton());
+        todoTextComplete = " " + todo.todoText + " ";
+        todolistText.className = "text-pending";
+      }
+      todolistText.innerText = todoTextComplete;
+      // todoLi.id = index;
+      // todoLi.prepend(this.createCompleteButton());
+      todoLi.appendChild(todolistText);
       todoLi.appendChild(this.createEditButton());
       todoLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todoLi);
@@ -125,6 +131,13 @@ var view = {
     completeButton.textContent = "check_circle";
     completeButton.className = "material-icons completeButton";
     return completeButton;
+  },
+
+  createIncompleteButton: function() {
+    var incompleteButton = document.createElement("button");
+    incompleteButton.textContent = "panorama_fish_eye";
+    incompleteButton.className = "material-icons completeButton";
+    return incompleteButton;
   },
 
   createEditButton: function() {
@@ -159,8 +172,8 @@ var view = {
         handlers.completeTodo(parseInt(elementClick.parentNode.id));
       }
       if (elementClick.className === "material-icons editButton") {
-        var newText = document.getElementById("editInput");
         var editId = parseInt(elementClick.parentNode.id);
+        var newText = document.getElementById("editInput");
         handlers.editTodo(editId, newText.value);
       }
     });
