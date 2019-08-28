@@ -9,17 +9,26 @@ var toDoList = {
   addToDo: function(todoText) {
     this.todos.push({
       todoText: todoText,
-      completed: false
+      completed: false,
+      editModeStatus: false
     });
   },
   // Edit to do
   editToDo: function(index, todoText) {
+    var todo = this.todos[index];
     this.todos[index].todoText = todoText;
+    todo.editModeStatus = false;
+  },
+
+  editModeStatusChanger: function(index) {
+    var todo = this.todos[index];
+    todo.editModeStatus = !todo.editModeStatus;
   },
   // delete todo
   deleteToDo: function(index) {
     this.todos.splice(index, 1);
   },
+
   // complete todo
   completeToDo: function(index) {
     var todo = this.todos[index];
@@ -70,6 +79,11 @@ var handlers = {
     view.displayToDos();
   },
 
+  editMode: function(index) {
+    toDoList.editModeStatusChanger(index);
+    view.displayToDos();
+  },
+
   deleteTodo: function(index) {
     toDoList.deleteToDo(index);
     view.displayToDos();
@@ -89,7 +103,7 @@ var handlers = {
 var view = {
   displayToDos: function() {
     var todosUl = document.querySelector("ul");
-    todosUl.className = "list-wrapper"
+    todosUl.className = "list-wrapper";
     //sets the content to nothing
     todosUl.innerText = "";
 
@@ -99,6 +113,8 @@ var view = {
       var todolistText = document.createElement("p");
       var todoTextComplete = "";
       todoLi.id = index;
+      todosUl.appendChild(todoLi);
+      // edit button switcher based on completion of task
       if (todo.completed === true) {
         buttonComplete = todoLi.prepend(this.createCompleteButton());
         todoTextComplete = " " + todo.todoText + " ";
@@ -108,13 +124,21 @@ var view = {
         todoTextComplete = " " + todo.todoText + " ";
         todolistText.className = "text-pending";
       }
-      todolistText.innerText = todoTextComplete;
-      // todoLi.id = index;
-      // todoLi.prepend(this.createCompleteButton());
+      
+
+      //edit status mode display logic.
+      if (todo.editModeStatus === true) {
+        var editButton = this.createEditButton();
+      } else {
+        var editButton = this.createEditModeButton();
+      }
+
+      
       todoLi.appendChild(todolistText);
-      todoLi.appendChild(this.createEditButton());
+      todoLi.appendChild(editButton);
+      todolistText.innerText = todoTextComplete;
       todoLi.appendChild(this.createDeleteButton());
-      todosUl.appendChild(todoLi);
+      
       // the forEach has an optional argument that is "this" when executing callback forEach(callback, this)
     }, this);
   },
@@ -142,15 +166,24 @@ var view = {
 
   createEditButton: function() {
     var editButton = document.createElement("button");
-    editButton.textContent = "edit";
+    editButton.textContent = "done";
     editButton.className = "material-icons editButton";
+    
     return editButton;
   },
 
-  createEditInput: function(){
+  createEditModeButton: function() {
+    var editButton = document.createElement("button");
+    editButton.textContent = "edit";
+    editButton.className = "material-icons editModeButton";
+    
+    return editButton;
+  },
+
+  createEditInput: function() {
     var editInput = document.createElement("input");
     editInput.textContent = "";
-    editInput.className = "editInput";
+    editInput.className = "editTodoTextInput";
   },
 
   setUpEventListeners: function() {
@@ -160,6 +193,15 @@ var view = {
         handlers.addTodo(addTodoTextInput);
       }
     });
+    // editTodoTextInput.addEventListener("keyup", function(event){
+    //   if (event.key === "Enter") {
+    //     var editId = parseInt(elementClick.parentNode.id);
+    //     var newText = document.getElementById("editInput");
+    //     handlers.editTodo(editId, newText.value);
+    //   }
+
+    // });
+
     // Button Key Listeners
     var todosUl = document.querySelector("ul");
 
@@ -171,9 +213,12 @@ var view = {
       if (elementClick.className === "material-icons completeButton") {
         handlers.completeTodo(parseInt(elementClick.parentNode.id));
       }
+      if (elementClick.className === "material-icons editModeButton") {
+        handlers.editMode(parseInt(elementClick.parentNode.id));
+      }
       if (elementClick.className === "material-icons editButton") {
         var editId = parseInt(elementClick.parentNode.id);
-        var newText = document.getElementById("editInput");
+        var newText = document.getElementById("editTodoTextInput");
         handlers.editTodo(editId, newText.value);
       }
     });

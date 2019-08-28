@@ -149,7 +149,7 @@ h3 {
 }
 
 .toggle-icon {
-  font-size: 1.25rem;
+  font-size: 1.5625rem;
   padding-right: 0.625rem; 
 }
 .list-wrapper {
@@ -183,6 +183,9 @@ h3 {
 }
 
 .list > .editButton {
+  margin-left: auto;
+}
+.list > .editModeButton {
   margin-left: auto;
 }
 .list > .completeButton {
