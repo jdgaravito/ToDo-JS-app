@@ -124,21 +124,22 @@ var view = {
         todoTextComplete = " " + todo.todoText + " ";
         todolistText.className = "text-pending";
       }
-      
 
       //edit status mode display logic.
       if (todo.editModeStatus === true) {
         var editButton = this.createEditButton();
+        var content = this.createEditInput();
+        content.value = todo.todoText;
       } else {
+        var content = todolistText;
         var editButton = this.createEditModeButton();
       }
 
-      
-      todoLi.appendChild(todolistText);
+      todoLi.appendChild(content);
       todoLi.appendChild(editButton);
       todolistText.innerText = todoTextComplete;
       todoLi.appendChild(this.createDeleteButton());
-      
+
       // the forEach has an optional argument that is "this" when executing callback forEach(callback, this)
     }, this);
   },
@@ -168,7 +169,7 @@ var view = {
     var editButton = document.createElement("button");
     editButton.textContent = "done";
     editButton.className = "material-icons editButton";
-    
+
     return editButton;
   },
 
@@ -176,14 +177,15 @@ var view = {
     var editButton = document.createElement("button");
     editButton.textContent = "edit";
     editButton.className = "material-icons editModeButton";
-    
+
     return editButton;
   },
 
   createEditInput: function() {
-    var editInput = document.createElement("input");
-    editInput.textContent = "";
-    editInput.className = "editTodoTextInput";
+    var editInput = document.createElement("textarea");
+    editInput.setAttribute("type", "textarea");
+    editInput.setAttribute("id", "editTodoTextInput");
+    return editInput;
   },
 
   setUpEventListeners: function() {
@@ -193,14 +195,6 @@ var view = {
         handlers.addTodo(addTodoTextInput);
       }
     });
-    // editTodoTextInput.addEventListener("keyup", function(event){
-    //   if (event.key === "Enter") {
-    //     var editId = parseInt(elementClick.parentNode.id);
-    //     var newText = document.getElementById("editInput");
-    //     handlers.editTodo(editId, newText.value);
-    //   }
-
-    // });
 
     // Button Key Listeners
     var todosUl = document.querySelector("ul");
