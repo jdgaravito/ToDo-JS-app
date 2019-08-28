@@ -1,5 +1,6 @@
 # ToDo-JS-app
 View it live on: https://jdgaravito.github.io/ToDo-JS-app/
+
 A ToDo List made with vanilla JS.
 
 Made for practicing the JS Fundamentals.
